@@ -1,0 +1,15 @@
+.submit{
+    background: #191c29;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14px;
+}
+::ng-deep .mat-button[disabled]{
+    background: #191c29 !important;
+    color: #fff !important;
+    // opacity: ;
+    cursor: not-allowed;
+}
+.submit-btn{
+    padding: 10px 0px;
+}

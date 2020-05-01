@@ -1,0 +1,44 @@
+<div mat-dialog-title>Contact Form</div>
+<mat-dialog-content>
+    <form [formGroup]="contactForm">
+        <div fxLayout="row wrap">
+            <div fxFlex="100">
+                <mat-form-field class="full-width">
+                    <input matInput type="text" formControlName="firstName" class="" placeholder="First name" required
+                        [(ngModel)]="userDet.fname" />
+                    <mat-error *ngIf="f.firstName.invalid">Enter valid input</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div fxFlex="100">
+                <mat-form-field class="full-width">
+                    <input matInput type="text" formControlName="lastName" class="" placeholder="Last name" required
+                        [(ngModel)]="userDet.lname" />
+                    <mat-error *ngIf="f.lastName.invalid">Enter valid input</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div fxFlex="100">
+                <mat-form-field class="full-width">
+                    <input matInput type="text" formControlName="email" class="" placeholder="Email Id" required
+                        [(ngModel)]="userDet.mail" />
+                    <mat-error *ngIf="f.email.invlaid">Enter valid email</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div fxFlex="100">
+                <mat-form-field class="full-width">
+                    <input matInput type="text" formControlName="contact" class="" placeholder="Contact number" required
+                        [(ngModel)]="userDet.number" />
+                    <mat-error *ngIf="f.contact.invalid">Enter valid contact</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" class="submit-btn">
+                <button mat-button [disabled]="contactForm.invalid" class="btn btn-primary submit"
+                    (click)="submit(userDet)">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>

@@ -1,0 +1,22 @@
+<div mat-dialog-title class="chat-head">{{selUser.fname}} {{selUser.lname}}</div>
+<mat-dialog-content>
+    <div id="chat-sec" *ngFor="let ch of chat; let last = last" class="msg-cnt"
+        [ngClass]="{'left': ch.type == 'got', 'right': ch.type == 'sent'}">
+        <div class="msg-box" [ngClass]="{'msg-left': ch.type == 'got', 'msg-right': ch.type == 'sent'}">
+            {{ch.message}}
+            <div class="msg-time">{{ch.time | date:'HH:mm'}}</div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div fxLayout="row wrap" class="text-sec">
+        <div fxFlex="80">
+            <mat-form-field>
+                <input matInput type="text" [(ngModel)]="message" />
+            </mat-form-field>
+        </div>
+        <div fxFlex="20" class="send-sec">
+            <button mat-button class="btn btn-primary send-btn" (click)="send()" tabindex="-1">send</button>
+        </div>
+    </div>
+</mat-dialog-actions>

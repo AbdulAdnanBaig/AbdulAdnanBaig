@@ -1,0 +1,63 @@
+.msg-box{
+    max-width: 60%;
+    padding: 15px;
+    border-radius: 5px;
+}
+.msg-left{
+    background: #ccc;
+    word-break: break-all;
+    border-radius: 25px;
+}
+.msg-right{
+    background: #579ffb;
+    word-break: break-all;
+    border-radius: 25px;
+    color: #fff;
+}
+.right{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.left{
+    display: flex;
+}
+.msg-cnt{
+    margin: 10px 0px;
+}
+// ::ng-deep mat-dialog-container{
+//     padding: 0px !important;
+// }
+.chat-head{
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    background: black;
+    color: white;
+    border-radius: 27px;
+    text-align: center;
+}
+::ng-deep .mat-dialog-content{
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+::ng-deep .mat-form-field{
+    width:100%;
+}
+.send-sec{
+    text-align: center;
+}
+.send-btn{
+    padding: 2px 0px;
+    background: black;
+    color: #fff;
+    height: 40px;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+.text-sec{
+    width: 100%;
+}
+.msg-time{
+    font-size: 9px;
+    text-align: right;;
+}
