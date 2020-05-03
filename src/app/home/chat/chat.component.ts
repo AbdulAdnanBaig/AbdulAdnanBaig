@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit {
     arr = JSON.parse(localStorage.getItem('messages')) ? JSON.parse(localStorage.getItem('messages')) : [];
     arr.push(this.messagePayload)
     localStorage.setItem('messages', JSON.stringify(arr));
-    console.log(arr);
+    // console.log(arr);
     this.chat.push(this.messagePayload);
     this.messagePayload.type = 'sent';
     this.message = '';

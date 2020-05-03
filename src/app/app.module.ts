@@ -9,6 +9,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './home/form/form.component';
 import { FormsModule } from '@angular/forms';
+import { ChatComponent } from './home/chat/chat.component';
+import { NgxUploaderModule } from 'ngx-uploader';
 
 // material components
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import { ChatComponent } from './home/chat/chat.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { ChatComponent } from './home/chat/chat.component';
     MatCardModule,
     MatIconModule,
     MatMenuModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule,
+    NgxUploaderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

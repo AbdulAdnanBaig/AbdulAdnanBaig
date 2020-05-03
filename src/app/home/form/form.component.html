@@ -33,6 +33,11 @@
                     <mat-error *ngIf="f.contact.invalid">Enter valid contact</mat-error>
                 </mat-form-field>
             </div>
+            <div fxFlex="100">
+                <label class="photo-label">Upload photo:</label>
+                <input type="file" id="file-upload" accept=".png,.jpeg" ngFileSelect [options]="uploaderOptions" [uploadInput]="uploadInput"
+                (uploadOutput)="onUploadOutput($event)">
+            </div>
             <div fxFlex="100" class="submit-btn">
                 <button mat-button [disabled]="contactForm.invalid" class="btn btn-primary submit"
                     (click)="submit(userDet)">

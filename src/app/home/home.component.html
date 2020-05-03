@@ -1,9 +1,13 @@
 <div fxLayout="row wrap">
     <div fxFlex="100" class="head-sec">
-        <button mat-button [matMenuTriggerFor]="currUser"><mat-icon class="profile-icon">person</mat-icon><span class="profile-title">{{currentUser.fname}} {{currentUser.lname}}</span></button>
+        <button mat-button [matMenuTriggerFor]="currUser">
+            <span class="header-pic">{{currentUser.pic}}</span><span class="profile-title">{{currentUser.fname}}
+                {{currentUser.lname}}</span>
+        </button>
 
         <mat-menu #currUser="matMenu">
             <button mat-menu-item [matMenuTriggerFor]="userContacts">Contacts</button>
+            <button mat-menu-item (click)="deleteMenu()">Delete contacts</button>
         </mat-menu>
 
         <mat-menu #userContacts="matMenu">
@@ -11,15 +15,19 @@
         </mat-menu>
 
     </div>
-    <div fxFlex="100">
+    <div *ngIf="list" fxFlex="100">
         <div fxLayout="row wrap">
-            <div *ngFor="let user of userList" fxFlex.md="20" fxFlex.lg="20" fxFlex.sm="100" fxFlex.xs="100" fxFlex.it-xl="50" class="card-sec">
-                <mat-card class="contact-card">
+            <div *ngFor="let user of userList" fxFlex.md="30" fxFlex.lg="25" fxFlex.sm="50" fxFlex.xs="100"
+                fxFlex.it-xl="50" class="card-sec">
+                <mat-card class="">
                     <div fxLayout="row wrap">
-                        <div fxFlex="20">
-                            <mat-icon>person</mat-icon>
+                        <div fxFlex="25" class="profile-pic">
+                            <!-- <mat-icon>person</mat-icon> -->
+                            <div class="user-initials">
+                                <div>{{user.pic}}</div>
+                            </div>
                         </div>
-                        <div fxFlex="80">
+                        <div fxFlex="75" class="contact-det">
                             <div class="user-name">{{user.fname}} {{user.lname}}</div>
                             <div class="user-mail">{{user.mail}}</div>
                             <div class="user-number">{{user.number}}</div>
@@ -37,9 +45,26 @@
             </div>
         </div>
     </div>
+    <div *ngIf="!list" fxFlex="100">
+        <div fxLayout="row wrap">
+            <div *ngFor="let user of userList" fxFlex.md="30" fxFlex.lg="20" fxFlex.sm="50" fxFlex.xs="100"
+                fxFlex.it-xl="50" class="card-sec">
+                <div class="delete-list">
+                    <mat-checkbox class="primary-checkbox" (change)="onChange(user)" [(ngModel)]="user.checked">
+                        {{user.fname}} {{user.lname}}</mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </div>
     <div fxFlex="100" class="foot-sec">
-        <button mat-button class="add-new" (click)="addContact()">
+        <button *ngIf="list" mat-button class="add-new" (click)="addContact()">
             <mat-icon>add</mat-icon> <span>ADD</span>
+        </button>
+        <button *ngIf="!list" mat-button class="add-new right-10" (click)="cancel()">
+            <span>Cancel</span>
+        </button>
+        <button *ngIf="!list" mat-button class="add-new" (click)="deleteContacts()">
+            <mat-icon>delete</mat-icon> <span>Delete</span>
         </button>
     </div>
 </div>

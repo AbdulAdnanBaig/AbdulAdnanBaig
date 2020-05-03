@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormComponent } from './form/form.component';
 import { ChatComponent } from './chat/chat.component';
+import data from '../data.json';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { ChatComponent } from './chat/chat.component';
 })
 export class HomeComponent implements OnInit {
   data: any;
+  getData = data
   defaultUser: any = {
     fname: 'Abdul',
     lname: 'Adnan Baig',
@@ -23,14 +25,36 @@ export class HomeComponent implements OnInit {
   messageListDisplay: string[];
   userChat: any = [];
   userMessagesSent: any;
+  deleteArray: any = [];
+  list: Boolean = true;
 
   constructor(public dialog: MatDialog) { }
-
+ 
   ngOnInit() {
     this.setData();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')) ? JSON.parse(localStorage.getItem('currentUser')) : this.defaultUser;
-    console.log(this.currentUser);
+    // console.log(this.currentUser);
     this.createUserList();
+  }
+  setData() {
+    if (JSON.parse(localStorage.getItem('data'))) {
+      // do nothing
+    } else {
+      this.data = this.getData;
+      localStorage.setItem('data', JSON.stringify(this.data));
+    }
+  }
+
+  deleteMenu() {
+    this.list = false;
+  }
+
+  setPic() {
+    for (let index = 0; index < this.userList.length; index++) {
+      const element = this.userList[index];
+      element.pic = element.fname.charAt(0).toUpperCase() + element.lname.charAt(0).toUpperCase()
+    }
+    // console.log(this.userList);
   }
 
   createUserList() {
@@ -38,10 +62,11 @@ export class HomeComponent implements OnInit {
     this.userList = dataSet.filter(
       user => user.number != this.currentUser.number
     );
-    this.checkMessages()
+    this.setPic();
+    this.checkMessages();
   }
   changeUser(data: any) {
-    console.log(data);
+    // console.log(data);
     this.currentUser = data;
     localStorage.setItem('currentUser', JSON.stringify(data));
     this.createUserList();
@@ -68,7 +93,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
     });
   }
   chat(data): void {
@@ -83,7 +108,7 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
       this.checkMessages();
     });
   }
@@ -95,11 +120,11 @@ export class HomeComponent implements OnInit {
     this.userMessagesSent = tmp.filter(
       us => us.from == (this.currentUser.fname + ' ' + this.currentUser.lname)
     );
-    console.log(this.userMessagesSent);
+    // console.log(this.userMessagesSent);
     var userMessagesGrp = this.userMessagesReceived;
     userMessagesGrp = this.groupBy(userMessagesGrp, 'from');
     this.messageListDisplay = Object.keys(userMessagesGrp);
-    console.log(userMessagesGrp);
+    // console.log(userMessagesGrp);
   }
   selectChat(data: any) {
     this.userChat = [];
@@ -108,7 +133,7 @@ export class HomeComponent implements OnInit {
       if (element.from == data) {
         element.type = 'got';
         this.userChat.push(element);
-        console.log(this.userChat)
+        // console.log(this.userChat)
       }
     }
     for (let index = 0; index < this.userMessagesSent.length; index++) {
@@ -116,13 +141,13 @@ export class HomeComponent implements OnInit {
       if (element.to == data) {
         element.type = 'sent';
         this.userChat.push(element);
-        console.log(this.userChat)
+        // console.log(this.userChat)
       }
     }
     this.userChat.sort(function (x, y) {
       return x.time - y.time;
     });
-    console.log(this.userChat);
+    // console.log(this.userChat);
   }
   groupBy(iarr, ikey) {
     return iarr.reduce((a, b) => {
@@ -131,50 +156,32 @@ export class HomeComponent implements OnInit {
     }, {})
   }
 
-  setData() {
-    if (JSON.parse(localStorage.getItem('data'))){
-      // do nothing
-    } else {
-      this.data = [
-        {
-          fname: 'Abdul',
-          lname: 'Adnan Baig',
-          mail: 'adnanabdul8@gmail.com',
-          number: '9840872762'
-        },
-        {
-          fname: 'Alagappan',
-          lname: 'palaniappan',
-          mail: 'alagumpl@gmail.com',
-          number: '9840874937'
-        },
-        {
-          fname: 'Alagappan',
-          lname: 'Alagappan',
-          mail: 'alagu7@gmail.com',
-          number: '9840802938'
-        },
-        {
-          fname: 'Sai',
-          lname: 'Alekya',
-          mail: 'saialaek@gmail.com',
-          number: '9840853648'
-        },
-        {
-          fname: 'Ismuddin',
-          lname: 'Abdulsamad',
-          mail: 'ismu@gmail.com',
-          number: '9840800928'
-        },
-        {
-          fname: 'Hari',
-          lname: 'Prakash',
-          mail: 'hari@gmail.com',
-          number: '9840892883'
-        },
-      ]
-      localStorage.setItem('data', JSON.stringify(this.data));
+  
+  onChange(data: any) {
+    // console.log(data);
+    if (data.checked == true) {
+      // console.log(data.fname, 'selected');
+      this.deleteArray.push(data);
+    } else if (data.checked == false) {
+      // console.log(data.fname, 'un-selected');
+      const v = this.deleteArray.findIndex(value => value.number == data.number);
+      this.deleteArray.splice(v, 1);
     }
+    // console.log(this.deleteArray);
   }
 
+  deleteContacts() {
+    for (let index = 0; index < this.deleteArray.length; index++) {
+      const element = this.deleteArray[index];
+      const v = this.userList.findIndex(value => value.number == element.number);
+      this.userList.splice(v, 1);
+    }
+    localStorage.setItem('data', JSON.stringify(this.userList));
+    // consollog(this.userList);
+    this.list = true
   }
+  cancel() {
+    this.list = true;
+  }
+
+}
